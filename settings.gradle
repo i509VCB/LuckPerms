@@ -1,3 +1,14 @@
+// Fabric Needs this
+pluginManagement {
+    repositories {
+        maven {
+            url 'https://maven.fabricmc.net/'
+        }
+        jcenter()
+        gradlePluginPortal()
+    }
+}
+// Now back to your regularly scheduled programming.
 rootProject.name = 'luckperms'
 include (
         'api',
@@ -5,7 +16,9 @@ include (
         'bukkit',
         'bukkit-legacy',
         'bungee',
+        'fabric',
         'sponge', 'sponge:sponge-service', 'sponge:sponge-service-api6', 'sponge:sponge-service-api7',
         'nukkit',
         'velocity'
 )
+

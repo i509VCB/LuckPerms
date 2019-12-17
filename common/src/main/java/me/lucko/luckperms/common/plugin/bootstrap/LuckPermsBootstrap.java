@@ -137,6 +137,7 @@ public interface LuckPermsBootstrap {
      * <p>Bukkit: /root/plugins/LuckPerms</p>
      * <p>Bungee: /root/plugins/LuckPerms</p>
      * <p>Sponge: /root/luckperms/</p>
+     * <p>Fabric: /root/config/LuckPerms</p>
      *
      * @return the platforms data folder
      */

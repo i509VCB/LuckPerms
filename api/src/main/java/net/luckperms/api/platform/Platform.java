@@ -71,6 +71,7 @@ public interface Platform {
     enum Type {
         BUKKIT("Bukkit"),
         BUNGEECORD("BungeeCord"),
+        FABRIC("Fabric"),
         SPONGE("Sponge"),
         NUKKIT("Nukkit"),
         VELOCITY("Velocity");
