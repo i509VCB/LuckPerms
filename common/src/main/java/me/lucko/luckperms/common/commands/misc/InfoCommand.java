@@ -59,6 +59,7 @@ public class InfoCommand extends SingleCommand {
         Message.INFO_TOP.send(sender,
                 plugin.getBootstrap().getVersion(),
                 plugin.getBootstrap().getType().getFriendlyName(),
+                plugin.getBootstrap().getEnvironment().getFriendlyName(),
                 plugin.getBootstrap().getServerBrand(),
                 plugin.getBootstrap().getServerVersion()
         );

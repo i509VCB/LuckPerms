@@ -54,11 +54,10 @@ import me.lucko.luckperms.common.tasks.SyncTask;
 import me.lucko.luckperms.common.treeview.PermissionRegistry;
 import me.lucko.luckperms.common.verbose.VerboseHandler;
 import me.lucko.luckperms.common.web.BytebinClient;
-
 import net.luckperms.api.LuckPerms;
-
 import okhttp3.OkHttpClient;
 
+import java.io.IOException;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.EnumSet;
@@ -66,7 +65,10 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
-public abstract class AbstractLuckPermsPlugin implements LuckPermsPlugin {
+/**
+ * Represents an implementation of a LuckPermsPlugin for a modded context where the plugin must be loaded very early on.
+ */
+public abstract class AbstractLuckPermsMod implements LuckPermsPlugin {
 
     // init during load
     private DependencyManager dependencyManager;
@@ -92,10 +94,9 @@ public abstract class AbstractLuckPermsPlugin implements LuckPermsPlugin {
      * Performs the initial actions to load the plugin
      */
     public final void load() {
-        // load dependencies
         this.dependencyManager = new DependencyManager(this);
         this.dependencyManager.loadDependencies(getGlobalDependencies());
-
+        initializeMod();
         // load the sender factory instance
         setupSenderFactory();
     }
@@ -133,10 +134,7 @@ public abstract class AbstractLuckPermsPlugin implements LuckPermsPlugin {
         if (getConfiguration().get(ConfigKeys.WATCH_FILES)) {
             try {
                 this.fileWatcher = new FileWatcher(this, getBootstrap().getDataDirectory());
-            } catch (Throwable e) {
-                // catch throwable here, seems some JVMs throw UnsatisfiedLinkError when trying
-                // to create a watch service. see: https://github.com/lucko/LuckPerms/issues/2066
-                getLogger().warn("Error occurred whilst trying to create a file watcher:");
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }
@@ -250,7 +248,6 @@ public abstract class AbstractLuckPermsPlugin implements LuckPermsPlugin {
                 Dependency.CAFFEINE,
                 Dependency.OKIO,
                 Dependency.OKHTTP,
-                Dependency.BYTEBUDDY,
                 Dependency.EVENT
         );
     }
@@ -261,6 +258,7 @@ public abstract class AbstractLuckPermsPlugin implements LuckPermsPlugin {
     protected abstract MessagingFactory<?> provideMessagingFactory();
     protected abstract void registerCommands();
     protected abstract void setupManagers();
+    protected abstract void initializeMod();
     protected abstract CalculatorFactory provideCalculatorFactory();
     protected abstract void setupContextManager();
     protected abstract void setupPlatformHooks();
@@ -364,9 +362,9 @@ public abstract class AbstractLuckPermsPlugin implements LuckPermsPlugin {
     }
 
     private void displayBanner(Sender sender) {
-        sender.sendMessage(Message.colorize("&b       &3 __    "));
-        sender.sendMessage(Message.colorize("&b  |    &3|__)   " + "&2LuckPerms &bv" + getBootstrap().getVersion()));
-        sender.sendMessage(Message.colorize("&b  |___ &3|      " + "&8Running on " + getBootstrap().getType().getFriendlyName() + " (" + getBootstrap().getEnvironment().getFriendlyName() + ")" + " - " + getBootstrap().getServerBrand()));
+        sender.sendMessage("        __    ");
+        sender.sendMessage("  |    |__)   " + "LuckPerms v" + getBootstrap().getVersion());
+        sender.sendMessage("  |___ |      " + "Running on " + getBootstrap().getType().getFriendlyName() + " (" + getBootstrap().getEnvironment().getFriendlyName() + ")" + " - " + getBootstrap().getServerBrand());
         sender.sendMessage("");
     }
 }

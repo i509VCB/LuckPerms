@@ -110,6 +110,13 @@ public interface LuckPermsBootstrap {
     Platform.Type getType();
 
     /**
+     * Gets the environment type this instance of LuckPerms is running on.
+     *
+     * @return the environment type
+     */
+    Platform.Environment getEnvironment();
+
+    /**
      * Gets the name or "brand" of the running platform
      *
      * @return the server brand
@@ -138,6 +145,7 @@ public interface LuckPermsBootstrap {
      * <p>Bukkit: /root/plugins/LuckPerms</p>
      * <p>Bungee: /root/plugins/LuckPerms</p>
      * <p>Sponge: /root/luckperms/</p>
+     * <p>Fabric: /root/mods/LuckPerms</p>
      *
      * @return the platforms data folder
      */
@@ -213,5 +221,4 @@ public interface LuckPermsBootstrap {
      * @return true if the user is online
      */
     boolean isPlayerOnline(UUID uniqueId);
-
 }
