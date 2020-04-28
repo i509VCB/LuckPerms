@@ -208,7 +208,6 @@ public enum Message {
     INFO_TOP(
             "{PREFIX}&2Running &bLuckPerms v{}&2 by &bLuck&2." + "\n" +
             "{PREFIX}&f-  &3Platform: &f{}" + "\n" +
-            "{PREFIX}&f-  &3Environment: &f{}" + "\n" +
             "{PREFIX}&f-  &3Server Brand: &f{}" + "\n" +
             "{PREFIX}&f-  &3Server Version:" + "\n" +
             "{PREFIX}&f-  {}",
