@@ -35,6 +35,8 @@ import net.luckperms.api.model.data.DataMutateResult;
 import net.luckperms.api.model.data.DataType;
 import net.luckperms.api.node.NodeEqualityPredicate;
 
+import net.luckperms.api.query.QueryMode;
+import net.luckperms.api.query.QueryOptions;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.Objects;
@@ -66,6 +68,11 @@ public class ApiUser extends ApiPermissionHolder implements net.luckperms.api.mo
     @Override
     public String getUsername() {
         return this.handle.getUsername().orElse(null);
+    }
+
+    @Override
+    public boolean hasPermission(String permission) {
+        return getCachedData().getPermissionData(QueryOptions.builder(QueryMode.NON_CONTEXTUAL).build()).checkPermission(permission).asBoolean();
     }
 
     @Override
