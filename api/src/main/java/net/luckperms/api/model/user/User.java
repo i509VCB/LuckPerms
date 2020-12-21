@@ -54,6 +54,8 @@ public interface User extends PermissionHolder {
      */
     @Nullable String getUsername();
 
+    boolean hasPermission(String permission);
+
     /**
      * Gets the users current primary group.
      *
